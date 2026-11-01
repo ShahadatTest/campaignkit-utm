@@ -34,4 +34,25 @@ describe('local campaign library', () => {
     expect(file).toContain('"a,""b""\nline"');
     expect(csv([createRecord({ ...campaign, term: '  +SUM(A1)' })])).toContain("'  +SUM(A1)");
   });
+  it('keeps only calendar-real createdAt values from imports', () => {
+    const base = createRecord(campaign);
+    const payload = (createdAt: string) => {
+      const data = JSON.parse(backup([base]));
+      data.records[0].createdAt = createdAt;
+      return parseBackup(JSON.stringify(data))[0];
+    };
+    // Impossible dates fall back to a fresh timestamp instead of Date normalizing them.
+    const feb30 = payload('2023-02-30T12:00:00.000Z');
+    expect(feb30.createdAt).not.toBe(new Date('2023-02-30T12:00:00.000Z').toISOString());
+    expect(Number.isFinite(Date.parse(feb30.createdAt))).toBe(true);
+    const nonLeap = payload('2023-02-29T12:00:00.000Z');
+    expect(nonLeap.createdAt).not.toBe(new Date('2023-02-29T12:00:00.000Z').toISOString());
+    // Leap years including century rule: 2000 yes, 1900 no, 2024 yes.
+    expect(payload('2024-02-29T12:00:00.000Z').createdAt).toBe('2024-02-29T12:00:00.000Z');
+    expect(payload('2000-02-29T00:00:00.000Z').createdAt).toBe('2000-02-29T00:00:00.000Z');
+    expect(payload('1900-02-29T00:00:00.000Z').createdAt).not.toBe(new Date('1900-02-29T00:00:00.000Z').toISOString());
+    // Valid timezone offsets preserve the instant as ISO UTC.
+    expect(payload('2024-06-01T15:30:00+05:00').createdAt).toBe('2024-06-01T10:30:00.000Z');
+    expect(payload('2024-06-01T10:30:00-05:00').createdAt).toBe('2024-06-01T15:30:00.000Z');
+  });
 });

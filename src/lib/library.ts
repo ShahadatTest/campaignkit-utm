@@ -13,6 +13,21 @@ export function mergeRecords(existing: SavedLink[], incoming: SavedLink[]): Save
   return merged;
 }
 export function backup(records: SavedLink[]): string { return JSON.stringify({ version: 1, records }, null, 2); }
+/** Leap years: divisible by 4, except centuries unless divisible by 400. */
+function isLeapYear(year: number): boolean {
+  return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
+}
+/** Accept only calendar-real ISO-like instants; Date.parse alone normalizes Feb 30. */
+export function isStrictCreatedAt(value: string): boolean {
+  const match = /^(\d{4})-(\d{2})-(\d{2})T/.exec(value);
+  if (!match || !Number.isFinite(Date.parse(value))) return false;
+  const year = Number(match[1]);
+  const month = Number(match[2]);
+  const day = Number(match[3]);
+  if (month < 1 || month > 12 || day < 1) return false;
+  const daysInMonth = [31, isLeapYear(year) ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+  return day <= daysInMonth[month - 1];
+}
 export function parseBackup(text: string): SavedLink[] {
   if (text.length > 5_000_000) throw new Error('FILE_TOO_LARGE');
   const data: unknown = JSON.parse(text);
@@ -23,7 +38,7 @@ export function parseBackup(text: string): SavedLink[] {
     if (['url', ...fields].some(key => typeof source[key] !== 'string')) throw new Error('INVALID_RECORD');
     const campaign = Object.fromEntries(['url', ...fields].map(key => [key, source[key]])) as Campaign;
     const item = createRecord(campaign); // Never trust a stored URL or HTML; regenerate from validated fields.
-    if ('createdAt' in row && typeof row.createdAt === 'string' && /^\d{4}-\d{2}-\d{2}T/.test(row.createdAt) && Number.isFinite(Date.parse(row.createdAt))) item.createdAt = new Date(row.createdAt).toISOString();
+    if ('createdAt' in row && typeof row.createdAt === 'string' && isStrictCreatedAt(row.createdAt)) item.createdAt = new Date(row.createdAt).toISOString();
     return item;
   }));
 }
