@@ -12,7 +12,7 @@ One campaign can have links across stories, feeds and newsletters. Inconsistent 
 
 ## Join the project
 
-New contributors are welcome. Start with the [five-minute guide](docs/QUICK_START.md), read [CONTRIBUTING.md](CONTRIBUTING.md), and pick a [starter task](docs/STARTER_TASKS.md). Documentation, translations, accessibility feedback and tests are as welcome as code. Use [GitHub issues](https://github.com/diyaryavuz/campaignkit-utm/issues) for questions and proposals; comment before taking a task.
+New contributors are welcome. Start with the [five-minute guide](docs/QUICK_START.md), read [CONTRIBUTING.md](CONTRIBUTING.md), and pick a [starter task](docs/STARTER_TASKS.md). For sample source/medium/campaign values, see [naming examples](docs/NAMING_EXAMPLES.md). Documentation, translations, accessibility feedback and tests are as welcome as code. Use [GitHub issues](https://github.com/diyaryavuz/campaignkit-utm/issues) for questions and proposals; comment before taking a task.
 
 The first-release scope is **v0.1.0**: a local-first campaign link workspace. See the [roadmap](docs/ROADMAP.md), [release notes](CHANGELOG.md), [community rules](CODE_OF_CONDUCT.md) and [security/data-safety guide](SECURITY.md). No signup, cloud service or API key is required to contribute.
 
