@@ -1,0 +1,50 @@
+[
+  {
+    "title": "docs: add English and Turkish campaign naming examples",
+    "labels": [
+      "good first issue",
+      "documentation"
+    ],
+    "body": "## User need\nNew users need realistic examples for consistent source/medium/campaign values before using their own data.\n\n## Scope\nAdd `docs/NAMING_EXAMPLES.md` with paired English/Turkish explanations. Link it from both READMEs.\n\n## Acceptance\n- Three invented campaigns: newsletter, organic social, and paid social.\n- Each has a destination on example.com, source, medium, campaign and optional content/term.\n- Explain case/space warnings and that normalization is explicit, not automatic.\n- Explain that naming consistency does not guarantee attribution or measure clicks.\n- Examples match `buildLink` behavior; `npm test` and `npm run build` pass.\n\nNo UI or analytics integrations. Comment before starting; take one task at a time."
+  },
+  {
+    "title": "fix: reject impossible creation dates when importing a backup",
+    "labels": [
+      "good first issue",
+      "bug"
+    ],
+    "body": "## User need\nImported creation dates should not silently turn an impossible calendar date into a different day.\n\n## Evidence\nIn `src/lib/library.ts`, `parseBackup` accepts a createdAt string with an ISO-looking prefix and finite Date.parse result. JavaScript can normalize February 30. Existing fallback is the newly generated record time when a date is unusable.\n\n## Acceptance\n- Add strict calendar validation before accepting imported createdAt.\n- Preserve current fallback behavior for unusable dates; do not reject otherwise valid campaign records solely for that field.\n- Tests in `src/lib/library.test.ts` cover February 30, non-leap February 29, valid leap years including century rules, and valid timezone offsets.\n- Preserve valid timestamps as ISO instants, additive import, duplicate handling and version-1 backup shape.\n- `npm test` and `npm run build` pass.\n\nNo new dependency or storage migration. Comment before starting."
+  },
+  {
+    "title": "docs: review English and Turkish UI terminology for consistency",
+    "labels": [
+      "good first issue",
+      "documentation"
+    ],
+    "body": "## User need\nBoth languages should describe the same action and warning, especially save failures and recovery.\n\n## Scope\nReview the labels in `src/App.tsx` against README.md and README.tr.md. Propose a small, justified terminology patch rather than rewriting all copy.\n\n## Acceptance\n- Identify concrete inconsistencies with before/after examples.\n- Keep storage errors, reset consequences, import limits and no-tracking statements equally clear in both languages.\n- Preserve accessible labels and update affected assertions in App.test.tsx if needed.\n- Check both languages; run npm test and npm run build.\n\nDo not change product behavior or add a third language in this task. Comment before starting."
+  },
+  {
+    "title": "a11y: audit keyboard focus through builder, bulk and library",
+    "labels": [
+      "help wanted",
+      "accessibility"
+    ],
+    "body": "## User need\nKeyboard users should be able to complete the same link and backup workflows.\n\n## Scope\nPerform a focused keyboard audit of builder, bulk variants, library search/reuse, notifications and import controls in `src/App.tsx` and src styles. This is an audit task; do not assume a bug exists.\n\n## Acceptance\n- Record browser/version, exact key sequence, expected/actual focus, and screenshots where useful using invented data.\n- Check visible focus, logical order, no focus traps, and focus after switching views or dismissing notifications.\n- Fix only confirmed small defects and add relevant behavioral tests. Larger design changes become separate issues.\n- Check English/Turkish and narrow layout. npm test and npm run build pass.\n\nDo not rewrite the whole UI or claim an accessibility certification."
+  },
+  {
+    "title": "test: add browser coverage for saving and additive backup import",
+    "labels": [
+      "help wanted",
+      "testing"
+    ],
+    "body": "## User need\nThe component tests cover persistence, but a real browser should verify a saved link survives reload and imports preserve existing records.\n\n## Scope\nPropose a minimal Playwright setup and one browser workflow before adding a dependency. Start with package.json, .github/workflows/quality-and-pages.yml and src/App.test.tsx.\n\n## Acceptance\n- Build/start the local app in CI; use temporary isolated browser storage and invented data.\n- Save a link, reload, verify it, import a second valid version-1 backup, and verify both records remain without duplicates.\n- Include one invalid-import case proving the existing library is unchanged.\n- Document local execution and browser installation. Existing unit tests/build remain green.\n- CI test jobs do not receive deployment secrets or Pages write permissions.\n\nNo app backend or shared-user storage. This task is larger than a first copy edit."
+  },
+  {
+    "title": "design: define optional utm_id and utm_source_platform compatibility",
+    "labels": [
+      "help wanted",
+      "enhancement"
+    ],
+    "body": "## User need\nSome campaigns need optional utm_id/source_platform values without losing current backup compatibility.\n\n## Scope\nWrite a design proposal first; implementation is not part of this issue. Inspect src/lib/campaign.ts, src/lib/library.ts and both README files.\n\n## Acceptance\n- Define field validation, empty-field behavior and what happens to an existing destination parameter.\n- Explain single/bulk/library UI impact and English/Turkish labels.\n- Specify version-1 import compatibility, export strategy and migration tests.\n- Preserve explicit normalization and unrelated URL parameters/fragments.\n- Maintainer discussion resolves the data-format approach before coding.\n\nNo tracking API, automatic attribution claims or new account requirement."
+  }
+]

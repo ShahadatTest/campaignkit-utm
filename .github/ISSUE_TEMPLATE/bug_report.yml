@@ -1,0 +1,27 @@
+name: Bug report
+description: Report a reproducible problem using invented data.
+title: "bug: "
+body:
+  - type: markdown
+    attributes:
+      value: "Use example.com and invented campaign data. Do not upload real exports, secrets or personal URLs. Read SECURITY.md for sensitive reports."
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: Include the smallest example input and what you clicked.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected and actual result
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Browser, operating system and version/commit
+      placeholder: "Firefox, Windows 11, v0.1.0 or commit SHA"
+    validations:
+      required: true

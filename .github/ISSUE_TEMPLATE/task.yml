@@ -1,0 +1,17 @@
+name: Contribution task
+description: Define a bounded task with a clear completion check.
+title: "task: "
+body:
+  - type: textarea
+    id: need
+    attributes:
+      label: User need and scope
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      description: Observable results, files to start with, and checks to run. State what is outside scope.
+    validations:
+      required: true

@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Contribution guide
+    url: https://github.com/diyaryavuz/campaignkit-utm/blob/main/CONTRIBUTING.md
+    about: Setup, checks and how to choose a first task.
+  - name: Security and data safety
+    url: https://github.com/diyaryavuz/campaignkit-utm/blob/main/SECURITY.md
+    about: Read this before reporting sensitive vulnerabilities or data-loss details.
