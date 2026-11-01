@@ -22,6 +22,10 @@ Bir kampanyanın Instagram hikâyesi, gönderisi ve e-posta bülteni için bağl
 - Bozuk yedekte tüm içe aktarmayı reddetme; bozuk yerel veriyi sessizce sıfırlamama.
 - Türkçe/İngilizce arayüz, mobil düzen, klavye etiketleri.
 
+## Adlandırma örnekleri
+
+Tutarlı `source` / `medium` / `campaign` değerleri için [İngilizce-Türkçe örnekler](docs/NAMING_EXAMPLES.md).
+
 ## Çalıştırma
 
 Node.js **22.12+** ve npm kullanın.
